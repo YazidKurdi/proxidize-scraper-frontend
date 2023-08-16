@@ -1,13 +1,14 @@
+<template>
+    <Navbar />
+    <div class="content">
+      <router-view />
+    </div>
+</template>
+
 <script setup>
-import ChildComponent from './components/Header.vue'
+import Navbar from './components/Navbar.vue'
 
 </script>
-
-<template>
-  <div>
-    <ChildComponent />
-  </div>
-</template>
 
 <style scoped>
 </style>
