@@ -164,7 +164,6 @@ const retrieveScraped = async () => {
         const response = await axios.get(`/api/user/scrape-results/?page=${currentPage.value}`)
         scrapedData.value = response.data.results
         maxPage.value = Math.ceil(response.data.count / response.data.page_size)
-        console.log(response)
     }
     catch (error) {
         console.log(error)
