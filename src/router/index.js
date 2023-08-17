@@ -1,16 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-// import LandingPage from '../views/LandingPage.vue'
+import Table from '../components/Table.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 
 
 const routes = [
-//   {
-//     path: '/',
-//     name: 'LandingPage',
-//     component: LandingPage,
-//     meta: { title: 'Home' }
-//   },
+  {
+    path: '/',
+    name: 'Table',
+    component: Table,
+    meta: { title: 'Home' }
+  },
   {
     path: '/register',
     name: 'Register',
@@ -23,7 +23,7 @@ const routes = [
     component: Login,
     meta: { title: 'Login' }
   },
-
+  
 ]
 
 const router = createRouter({
