@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="bg-gray-50 h-[91vh]">
+  <div class="bg-gray-50 h-[91vh] overflow-hidden">
     <div class="flex flex-col items-center px-6 py-8 mx-auto lg:py-0">
       <router-view />
     </div>
