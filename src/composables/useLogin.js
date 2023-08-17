@@ -17,14 +17,13 @@ export default function useLogin() {
       const response = await axios.post('/dj-rest-auth/login/', {
         username: username,
         password: password,
-      });
-      const token = response.data.key;
+      })
+      const token = response.data.key
       authStore.setToken(token)
       axios.defaults.headers.common["Authorization"] = "Token " + token
 
-      router.push({ name: 'Table' }); // Redirect after successful login
+      router.push({ name: 'Table' }) // Redirect after successful login
     } catch (error) {
-      console.log(error)
       for (let errorKey in error.response.data) {
         for (let item of error.response.data[errorKey]) {
           notify({
@@ -35,7 +34,7 @@ export default function useLogin() {
         }
       }
     }
-  };
+  }
 
   return { login }
 }

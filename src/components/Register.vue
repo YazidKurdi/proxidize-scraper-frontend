@@ -63,7 +63,8 @@ const register = async () => {
 
   try {
     await axios.post('/dj-rest-auth/registration/', formData)
-    performLogin(username.value, password1.value), 4000
+    performLogin(username.value, password1.value)
+    
   } catch (error) {
     for (let errorKey in error.response.data) {
       for (let item of error.response.data[errorKey]) {

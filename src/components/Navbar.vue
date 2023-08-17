@@ -36,16 +36,11 @@ import axios from 'axios'
 
 const authStore = useAuthStore()
 
-
 const logout = () => {
-
     axios.defaults.headers.common['Authorization'] = ''
     localStorage.removeItem('token')
     authStore.clearToken()
-};
-
-
-
+}
 </script>
 
 <style lang="scss" scoped></style>

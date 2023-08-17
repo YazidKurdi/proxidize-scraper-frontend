@@ -5,6 +5,7 @@
       <router-view />
     </div>
   </div>
+  <!-- Notification handling -->
   <NotificationGroup group="error">
     <div class="fixed inset-0 flex items-start justify-end p-6 px-12 py-20 pointer-events-none">
       <div class="w-full max-w-sm">
