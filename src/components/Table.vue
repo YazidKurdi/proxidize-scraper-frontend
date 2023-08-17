@@ -1,7 +1,63 @@
 <template>
+    <div v-if="authStore.isAuthenticated" class="flex justify-between items-center lg:flex p-6 w-full max-w-5xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200 mt-5">
+        <form class="flex gap-x-5" @submit.prevent="scrapeKeyword">
+            <div>
+                <label class="relative block min-w-[15rem]">
+                    <input v-model="keyword"
+                        class="w-full bg-white placeholder:font-italitc placeholder:text-sm border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+                        placeholder="Enter your keyword to scrape" type="text" required />
+                    <button class="absolute inset-y-0 right-0 flex items-center pr-3" type="submit">
+                        <svg class="h-5 w-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30"
+                            height="30" viewBox="0 0 30 30">
+                            <path
+                                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+                            </path>
+                        </svg>
+                    </button>
+                </label>
+            </div>
+            <div>
+                <input v-model="minRows" type="number"
+                    class="max-w-[10rem] bg-white placeholder:font-italitc placeholder:text-sm border p-2 border-slate-400 drop-shadow-md rounded-md py-2 focus:outline-none"
+                    placeholder="Min rows to scrape" required>
+            </div>
+        </form>
+        <template v-if="1">
+            <div class="flex justify-between gap-x-3 min-w-[25rem]">
+                <div id="toast-default" class="flex w-full p-1 text-gray-500 bg-white rounded-lg items-center"
+                    role="alert">
+                    <div
+                        class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-lg text-green-500 bg-green-100">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="text-sm font-normal ml-3"> {{ newlyScraped }} Newly Scraped </div>
+                </div>
+                <div id="toast-default"
+                    class="flex w-full p-1 text-gray-500 bg-white rounded-lg items-center"
+                    role="alert">
+                    <div
+                        class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-lg text-orange-500 bg-orange-100">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="text-sm font-normal ml-3"> {{ duplicatedScraped }} Ignored Duplicated </div><!---->
+                </div>
+            </div>
+        </template>
+    </div>
+
     <!-- component -->
     <section v-if="authStore.isAuthenticated"
-        class="flex flex-col justify-center items-center mt-12 antialiased text-gray-600 px-4 gap-y-5">
+        class="flex flex-col justify-center items-center mt-4 antialiased text-gray-600 px-4 gap-y-5">
         <div class="flex flex-col justify-center h-full min-w-[100rem]">
             <!-- Table -->
             <div class="w-full max-w-5xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
@@ -31,8 +87,9 @@
                                 <tr v-for="item in scrapedData" :key="item.index">
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex items-center justify-center">
+                                            <!-- Update image when finished -->
                                             <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full"
-                                                    :src="item.image" width="40" height="40" alt="Alex Shatov"></div>
+                                                    src="https://picsum.photos/200/200" width="40" height="40" alt="Alex Shatov"></div>
                                         </div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
@@ -92,10 +149,36 @@ const retrieveScraped = async () => {
     try {
         const response = await axios.get(`/api/user/scrape-results/?page=${currentPage.value}`)
         scrapedData.value = response.data.results
-        maxPage.value = response.data.count / (response.data.results.length)
+        maxPage.value = Math.ceil(response.data.count / response.data.page_size)
         console.log(response)
     }
     catch (error) {
+        console.log(error)
+    }
+};
+
+const keyword = ref('')
+const minRows = ref('')
+
+const newlyScraped = ref(0)
+const duplicatedScraped = ref(0)
+
+const scrapeKeyword = async () => {
+    try {
+        const response = await axios.post(`/api/scrape/`, { keyword: keyword.value, rows: minRows.value })
+        keyword.value = ''
+        minRows.value = ''
+        console.log(response)
+        newlyScraped.value = response.data.count_summary.new_added_count
+        duplicatedScraped.value = response.data.count_summary.duplicate_count
+
+        if (currentPage.value == maxPage.value) {
+            await retrieveScraped()
+        }
+    }
+    catch (error) {
+        keyword.value = ''
+        minRows.value = ''
         console.log(error)
     }
 };
