@@ -6,8 +6,7 @@ import App from './App.vue'
 import axios from 'axios'
 import Notifications from 'notiwind'
 
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_API || 'http://127.0.0.1:8000'
-
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_API || ''
 const pinia = createPinia()
 const app = createApp(App)
 app.use(router)
