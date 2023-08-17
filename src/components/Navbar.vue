@@ -47,16 +47,17 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '@/store/index.js';
-import axios from 'axios';
+import { useAuthStore } from '@/store/index.js'
+import axios from 'axios'
 
-const authStore = useAuthStore();
+const authStore = useAuthStore()
+
 
 const logout = () => {
 
-    axios.defaults.headers.common['Authorization'] = '';
-    localStorage.removeItem('token');
-    authStore.clearToken();
+    axios.defaults.headers.common['Authorization'] = ''
+    localStorage.removeItem('token')
+    authStore.clearToken()
 };
 
 </script>
