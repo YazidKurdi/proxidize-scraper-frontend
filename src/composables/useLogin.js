@@ -2,6 +2,7 @@
 import { useAuthStore } from '@/store/index.js'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { notify } from "notiwind"
 
 export default function useLogin() {
   const authStore = useAuthStore()
@@ -23,7 +24,16 @@ export default function useLogin() {
 
       router.push({ name: 'Table' }); // Redirect after successful login
     } catch (error) {
-      console.error('Login error:', error)
+      console.log(error)
+      for (let errorKey in error.response.data) {
+        for (let item of error.response.data[errorKey]) {
+          notify({
+            group: "error",
+            title: "Error",
+            text: item
+          })
+        }
+      }
     }
   };
 

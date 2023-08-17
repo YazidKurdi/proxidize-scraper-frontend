@@ -41,6 +41,7 @@
 import { ref } from 'vue'
 import useLogin from '@/composables/useLogin.js'
 import axios from 'axios'
+import { notify } from "notiwind"
 
 const { login } = useLogin()
 
@@ -61,12 +62,22 @@ const register = async () => {
   }
 
   try {
-    await axios.post('/dj-rest-auth/registration/', formData);
-    performLogin(username.value, password1.value);
+    await axios.post('/dj-rest-auth/registration/', formData)
+    performLogin(username.value, password1.value), 4000
   } catch (error) {
-    console.error('Registeration error:', error);
+    for (let errorKey in error.response.data) {
+      for (let item of error.response.data[errorKey]) {
+        notify({
+          group: "error",
+          title: "Error",
+          text: item
+        })
+      }
+    }
   }
 }
+
+
 </script>
 
 <style scoped></style>
