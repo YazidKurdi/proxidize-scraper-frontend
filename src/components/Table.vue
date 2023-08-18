@@ -22,7 +22,7 @@
                 <div>
                     <input v-model="minRows" type="number"
                         class="max-w-[10rem] bg-white placeholder:font-italitc placeholder:text-sm border p-2 border-slate-400 drop-shadow-md rounded-md py-2 focus:outline-none"
-                        placeholder="Min rows to scrape" required>
+                        placeholder="Rows to scrape" required>
                 </div>
                 <div role="status" v-show="isLoading">
                     <svg aria-hidden="true" class="w-8 h-8 mr-2 mt-1 text-gray-200 animate-spin fill-blue-600"
@@ -211,13 +211,14 @@ const scrapeKeyword = async () => {
             });
         }
     }
+}
 
-    // Call the retrieveScraped function whenever the currentPage changes
-    watch(currentPage, retrieveScraped)
+// Call the retrieveScraped function whenever the currentPage changes
+watch(currentPage, retrieveScraped)
 
-    onMounted(() => {
-        retrieveScraped()
-    })
+onMounted(() => {
+    retrieveScraped()
+})
 
 
 
