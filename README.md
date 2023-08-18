@@ -1,4 +1,4 @@
-# Proxidize Frontend
+# Proxidize Scraper Frontend
 
 The frontend was built using Vue JS (composition API) and styled using tailwindcss, utilizing routers & Pinia for global state management.
 
