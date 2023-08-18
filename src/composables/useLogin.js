@@ -8,8 +8,7 @@ export default function useLogin() {
   const authStore = useAuthStore()
   const router = useRouter()
 
-  const login = async (username, password) => 
-  {
+  const login = async (username, password) => {
     axios.defaults.headers.common['Authorization'] = ''
     localStorage.removeItem('token')
 
@@ -24,13 +23,22 @@ export default function useLogin() {
 
       router.push({ name: 'Table' }) // Redirect after successful login
     } catch (error) {
-      for (let errorKey in error.response.data) {
-        for (let item of error.response.data[errorKey]) {
-          notify({
-            group: "error",
-            title: "Error",
-            text: item
-          })
+      if (typeof error.response.data === 'string') {
+        // Handle the case where error.response.data is a string
+        notify({
+          group: "error",
+          title: "Error",
+          text: error.response.data
+        });
+      } else {
+        for (let errorKey in error.response.data) {
+          for (let item of error.response.data[errorKey]) {
+            notify({
+              group: "error",
+              title: "Error",
+              text: item
+            })
+          }
         }
       }
     }

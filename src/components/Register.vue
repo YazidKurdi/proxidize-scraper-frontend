@@ -66,16 +66,25 @@ const register = async () => {
     performLogin(username.value, password1.value)
     
   } catch (error) {
-    for (let errorKey in error.response.data) {
-      for (let item of error.response.data[errorKey]) {
+      if (typeof error.response.data === 'string') {
+        // Handle the case where error.response.data is a string
         notify({
           group: "error",
           title: "Error",
-          text: item
-        })
+          text: error.response.data
+        });
+      } else {
+        for (let errorKey in error.response.data) {
+          for (let item of error.response.data[errorKey]) {
+            notify({
+              group: "error",
+              title: "Error",
+              text: item
+            })
+          }
+        }
       }
     }
-  }
 }
 
 
