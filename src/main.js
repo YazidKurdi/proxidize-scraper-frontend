@@ -6,7 +6,7 @@ import App from './App.vue'
 import axios from 'axios'
 import Notifications from 'notiwind'
 
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_API || 'https://api-assignment-fd72b.ondigitalocean.app/'
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_API || 'https://proxidize-scraper-backend-production.up.railway.app/'
 const pinia = createPinia()
 const app = createApp(App)
 app.use(router)
