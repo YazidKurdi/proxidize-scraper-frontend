@@ -201,7 +201,7 @@ const scrapeKeyword = async () => {
             notify({
                 group: "error",
                 title: "Error",
-                text: "Ensure number of scraped rows is less than or equal to 50.",
+                text: "Ensure number of scraped rows is less than or equal to 30.",
             });
         } else {
             notify({
