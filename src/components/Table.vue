@@ -195,14 +195,22 @@ const scrapeKeyword = async () => {
         isLoading.value = false
     }
     catch (error) {
+        if (error.response.status == 400) {
+            notify({
+                group: "error",
+                title: "Error",
+                text: "Ensure number of scraped rows is less than or equal to 50.",
+            });
+        } else {
+            notify({
+                group: "error",
+                title: "Error",
+                text: "Whoops, something went wrong, please try again.",
+            });
+        }
         isLoading.value = false
         keyword.value = ''
         minRows.value = ''
-        notify({
-            group: "error",
-            title: "Error",
-            text: "Whoops, something went wrong, please try again.",
-        })
     }
 }
 
