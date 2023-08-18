@@ -95,8 +95,7 @@
                                             <div class="flex items-center justify-center">
                                                 <!-- Update image when finished -->
                                                 <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full"
-                                                        :src="item.image" width="40" height="40"
-                                                        alt="Alex Shatov"></div>
+                                                        :src="item.image" width="40" height="40" alt="Alex Shatov"></div>
                                             </div>
                                         </td>
                                         <td class="p-2 whitespace-nowrap">
@@ -195,7 +194,10 @@ const scrapeKeyword = async () => {
         isLoading.value = false
     }
     catch (error) {
-        if (error.response.status == 400) {
+        isLoading.value = false;
+        keyword.value = '';
+        minRows.value = '';
+        if (error.response && error.response.status === 400) {
             notify({
                 group: "error",
                 title: "Error",
@@ -208,18 +210,14 @@ const scrapeKeyword = async () => {
                 text: "Whoops, something went wrong, please try again.",
             });
         }
-        isLoading.value = false
-        keyword.value = ''
-        minRows.value = ''
     }
-}
 
-// Call the retrieveScraped function whenever the currentPage changes
-watch(currentPage, retrieveScraped)
+    // Call the retrieveScraped function whenever the currentPage changes
+    watch(currentPage, retrieveScraped)
 
-onMounted(() => {
-    retrieveScraped()
-})
+    onMounted(() => {
+        retrieveScraped()
+    })
 
 
 
