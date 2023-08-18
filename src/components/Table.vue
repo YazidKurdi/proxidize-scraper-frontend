@@ -95,7 +95,7 @@
                                             <div class="flex items-center justify-center">
                                                 <!-- Update image when finished -->
                                                 <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full"
-                                                        src="https://picsum.photos/200/200" width="40" height="40"
+                                                        :src="item.image" width="40" height="40"
                                                         alt="Alex Shatov"></div>
                                             </div>
                                         </td>
