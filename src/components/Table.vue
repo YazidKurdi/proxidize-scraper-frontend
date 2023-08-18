@@ -188,7 +188,7 @@ const scrapeKeyword = async () => {
         newlyScraped.value = response.data.count_summary.new_added_count
         duplicatedScraped.value = response.data.count_summary.duplicate_count
 
-        if (currentPage.value == maxPage.value) {
+        if (currentPage.value == maxPage.value || currentPage.value == 1) {
             await retrieveScraped()
         }
 
